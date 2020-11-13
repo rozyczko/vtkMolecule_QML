@@ -1,4 +1,4 @@
-__author__ = 'github.com/wardsimon'
+__author__ = 'github.com/rozyczko'
 __version__ = '0.0.1'
 
 from PySide2.QtCore import QObject, QUrl, qDebug, qCritical, Signal, Property, Slot, Qt
@@ -82,7 +82,7 @@ class canvasHandler(QObject):
 
     @Slot()
     def create_structure(self):
-        import vtk
+        import vtk  # REQUIRES VTK < 9.0!!!
         # molecule
         mol = vtk.vtkMolecule()
 
@@ -113,7 +113,6 @@ class canvasHandler(QObject):
 
         self.fbo.update()
 
-
     @Slot(int, int, int)
     def mousePressEvent(self, button: int, screenX: int, screenY: int):
         qDebug('CanvasHandler::mousePressEvent()')
@@ -132,7 +131,7 @@ def main():
     app = App(sys.argv)
     engine = QQmlApplicationEngine()
 
-    app.setApplicationName('QtVTK-Py')
+    app.setApplicationName('vtkMolecule_QML')
 
     qmlRegisterType(FboItem, 'QtVTK', 1, 0, 'VtkFboItem')
 
@@ -149,7 +148,7 @@ def main():
     handler.fbo = app._m_vtkFboItem
 
     rc = app.exec_()
-    qDebug(f'CanvasHandler::CanvasHandler: Execution finished with return code: {rc}')
+    qDebug(f'CanvasHandler: Execution finished with return code: {rc}')
 
 
 if __name__ == '__main__':
